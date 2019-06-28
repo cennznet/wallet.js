@@ -1,0 +1,35 @@
+{
+    "name": "@cennznet/wallet",
+    "version": "0.14.1",
+    "description": "wallet implementation to use with cennznet",
+    "author": "ian.he <ian.he@centrality.ai>",
+    "keywords": [
+        "CENNZNet"
+    ],
+    "homepage": "https://github.com/cennznet/wallet.js/tree/master/packages/wallet",
+    "license": "Apache-2.0",
+    "main": "index.js",
+    "types": "index.d.ts",
+    "repository": {
+        "type": "git",
+        "url": "git+ssh://git@github.com/cennznet/wallet.js.git"
+    },
+    "scripts": {
+        "test": "echo \"Error: run tests from root\" && exit 1",
+        "test:unit": "jest --coverage -c ../../jest/jest.config.js spec"
+    },
+    "dependencies": {
+        "@cennznet/util": "^0.14.1",
+        "@plugnet/keyring": "^0.93.101",
+        "bip39": "^2.6.0",
+        "hdkey": "^1.1.0",
+        "reflect-metadata": "^0.1.12",
+        "tweetnacl": "^1.0.1"
+    },
+    "devDependencies": {
+        "@cennznet/api": "^0.14.1",
+        "@cennznet/types": "^0.14.1",
+        "@types/jest": "^24.0.15",
+        "jest": "24.8.0"
+    }
+}
