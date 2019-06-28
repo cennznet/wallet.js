@@ -47,7 +47,7 @@ export interface IKeyring<S> {
 export interface KeyringType<T> {
     name: string;
     new (data?: T): IKeyring<T>;
-    generate(): Promise<IKeyring<T>>;
+    generate(opt?: any): Promise<IKeyring<T>>;
 }
 
 export interface Encryptor {

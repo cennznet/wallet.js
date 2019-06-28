@@ -12,10 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {mnemonicToSeed} from '@cennznet/util';
+import {mnemonicGenerate, mnemonicToSeed} from '@cennznet/util';
 import {KeyringPair} from '@cennznet/util/types';
 import {Keyring} from '@plugnet/keyring';
-import {generateMnemonic} from 'bip39';
 import HDKey from 'hdkey';
 import {DEFAULT_KEYRING_TYPE} from '../constants';
 import {waitForCryptoReady} from '../decorators';
@@ -27,28 +26,39 @@ interface SerializedHDKeyring {
     mnemonic: string;
     numberOfAccounts?: number;
     hdPath?: string;
+    keyringType?: string;
 }
 
 const privateMnemonic = new WeakMap<object, string>();
 
+// tslint:disable member-ordering no-magic-numbers
+export interface HDKeyringOpt {
+    words: 12 | 15 | 18 | 21 | 24;
+    hdPath: string;
+    numberOfAccounts: number;
+    keyringType: string;
+}
 /**
  * a HD Keyring implementation of ${IKeyring}
  * will use hd path "m/44'/392'/0'/0" (for CENNZ) by default
  */
 export class HDKeyring implements IKeyring<SerializedHDKeyring> {
     @waitForCryptoReady
-    static async generate(): Promise<HDKeyring> {
-        const mnemonic = generateMnemonic();
+    static async generate(opt: Partial<HDKeyringOpt> = {}): Promise<HDKeyring> {
+        const mnemonic = mnemonicGenerate(opt.words);
         const keyring = new HDKeyring({
             mnemonic,
-            numberOfAccounts: 0,
-            hdPath: DEFAULT_HD_PATH,
+            numberOfAccounts: opt.numberOfAccounts || 0,
+            hdPath: opt.hdPath || DEFAULT_HD_PATH,
+            keyringType: opt.keyringType || DEFAULT_KEYRING_TYPE
         });
         return keyring;
     }
+
     private rootKey: HDKey;
     private pairs: KeyringPair[];
     private hdPath: string;
+    private keyringType: string;
 
     constructor(opt?: SerializedHDKeyring) {
         this.pairs = [];
@@ -68,6 +78,7 @@ export class HDKeyring implements IKeyring<SerializedHDKeyring> {
             mnemonic: privateMnemonic.get(this),
             numberOfAccounts: this.pairs.length,
             hdPath: this.hdPath,
+            keyringType: this.keyringType
         };
     }
 
@@ -103,7 +114,7 @@ export class HDKeyring implements IKeyring<SerializedHDKeyring> {
     }
 
     private _deserialize(opt: SerializedHDKeyring): void {
-        const {mnemonic, numberOfAccounts = 0, hdPath = DEFAULT_HD_PATH} = opt;
+        const {mnemonic, numberOfAccounts = 0, hdPath = DEFAULT_HD_PATH, keyringType = DEFAULT_KEYRING_TYPE} = opt;
         const hdKey = HDKey.fromMasterSeed(Buffer.from(mnemonicToSeed(mnemonic)));
         this.hdPath = hdPath;
         this.rootKey = hdKey.derive(hdPath);
@@ -113,5 +124,6 @@ export class HDKeyring implements IKeyring<SerializedHDKeyring> {
             const kp = keyring.addFromSeed(this.rootKey.deriveChild(i).privateKey);
             this.pairs.push(kp);
         }
+        this.keyringType = keyringType;
     }
 }
