@@ -50,7 +50,7 @@ export class HDKeyring implements IKeyring<SerializedHDKeyring> {
             mnemonic,
             numberOfAccounts: opt.numberOfAccounts || 0,
             hdPath: opt.hdPath || DEFAULT_HD_PATH,
-            keyringType: opt.keyringType || DEFAULT_KEYRING_TYPE
+            keyringType: opt.keyringType || DEFAULT_KEYRING_TYPE,
         });
         return keyring;
     }
@@ -78,7 +78,7 @@ export class HDKeyring implements IKeyring<SerializedHDKeyring> {
             mnemonic: privateMnemonic.get(this),
             numberOfAccounts: this.pairs.length,
             hdPath: this.hdPath,
-            keyringType: this.keyringType
+            keyringType: this.keyringType,
         };
     }
 

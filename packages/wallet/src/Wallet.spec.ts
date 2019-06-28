@@ -26,7 +26,7 @@ const TEST_ACCOUNT = {
     seed: '0x3cf2ec6ffd26587529ab06c82ba9b33110198085f5c6b8d882653d056bf9e0d3',
     address: '5DHzypfuQH7FPhCsrqMxpxkBaPHe8QNhc5s1PwEMDc5p5Nb7',
     publicKey: '0x366010e706af618a6037731b07663d4b6f10eac201c7fdd5fb0bd4727742524d',
-    mnemonic: 'insane push cradle toilet token gate chair trim spare blush rebuild top'
+    mnemonic: 'insane push cradle toilet token gate chair trim spare blush rebuild top',
 };
 
 const GENESIS_HASH = '0x14ba3ad1bf42740e82a408d57955b0c026bfc268ee559ce9081ba7fb530de815';
@@ -102,11 +102,11 @@ describe('a wallet', () => {
 
         it('try resolve conflicts #1', async () => {
             const account0 = {
-                address: '5HTkvBrPpfrSZCoHE9qBMyNmV2JVJcKLNswwXvWdZjizCMHj'
+                address: '5HTkvBrPpfrSZCoHE9qBMyNmV2JVJcKLNswwXvWdZjizCMHj',
             };
             const account1 = {
                 address: '5GnGjKZcdmbQfYUyShSkDi1PE9HE93wj1J5zxHtZ4cYP43fh',
-                seed: '0x4175f9081d64c9eea1f1cf7dbdcd58069a0e8bf09e36facdd7e62c59f0c96124'
+                seed: '0x4175f9081d64c9eea1f1cf7dbdcd58069a0e8bf09e36facdd7e62c59f0c96124',
             };
             // keyring#0 is hdkeyring with 1 account(account0) and account1 is the next account
             const vault =
@@ -133,11 +133,11 @@ describe('a wallet', () => {
         // TODO: update test data
         it.skip('try resolve conflicts #2', async () => {
             const account0 = {
-                address: '5DMoKb4xQBUgB8XRz3dPfkKkEYGrQ9UkUEYHrrucAfTqyBxm'
+                address: '5DMoKb4xQBUgB8XRz3dPfkKkEYGrQ9UkUEYHrrucAfTqyBxm',
             };
             const account1 = {
                 address: '5GnGjKZcdmbQfYUyShSkDi1PE9HE93wj1J5zxHtZ4cYP43fh',
-                seed: '0x4175f9081d64c9eea1f1cf7dbdcd58069a0e8bf09e36facdd7e62c59f0c96124'
+                seed: '0x4175f9081d64c9eea1f1cf7dbdcd58069a0e8bf09e36facdd7e62c59f0c96124',
             };
             // keyring#0 is hdkeyring with 1 account(account0) and account1 is the next account
             const vault =
@@ -150,7 +150,7 @@ describe('a wallet', () => {
             await keyring.deserialize({
                 mnemonic,
                 numberOfAccounts: 1,
-                hdPath: 'm/44\'/392\'/0\'/0'
+                hdPath: "m/44'/392'/0'/0",
             });
             await wallet.addKeyring(keyring);
             expect((wallet as any)._accountKeyringMap[account0.address]).toBe(1);
@@ -169,7 +169,7 @@ describe('a wallet', () => {
             await expect(wallet.unlock('test')).rejects.toThrow('keyring type SimpleKeyring not found');
             const wallet2 = new Wallet({
                 vault,
-                keyringTypes: [SimpleKeyring, HDKeyring]
+                keyringTypes: [SimpleKeyring, HDKeyring],
             });
             await wallet2.unlock('test');
         });
@@ -182,14 +182,14 @@ describe('a wallet', () => {
             await wallet.addKeyring(keyring);
             await wallet.sign(testExtrinsic, alice.address, {
                 nonce: 0,
-                blockHash: GENESIS_HASH
+                blockHash: GENESIS_HASH,
             });
             expect(testExtrinsic.isSigned).toBeTruthy();
             const anotherAccountAddress = await wallet.addAccount();
             const testExtrinsic2 = new Extrinsic('0x010200ea51b75b00000000');
             await wallet.sign(testExtrinsic2, anotherAccountAddress, {
                 nonce: 0,
-                blockHash: GENESIS_HASH
+                blockHash: GENESIS_HASH,
             });
             expect(testExtrinsic2.isSigned).toBeTruthy();
         });
@@ -197,7 +197,7 @@ describe('a wallet', () => {
             await expect(
                 wallet.sign(testExtrinsic, bob.address, {
                     nonce: 0,
-                    blockHash: GENESIS_HASH
+                    blockHash: GENESIS_HASH,
                 })
             ).rejects.toThrow();
         });
@@ -212,7 +212,7 @@ describe('a wallet', () => {
             [] = [
                 await keyring.addPair(alice),
                 await keyring.addPair(bob),
-                await keyring.addFromSeed(hexToU8a(TEST_ACCOUNT.seed))
+                await keyring.addFromSeed(hexToU8a(TEST_ACCOUNT.seed)),
             ];
             await wallet.addKeyring(keyring);
         });
@@ -226,7 +226,7 @@ describe('a wallet', () => {
                 await expect(
                     wallet.sign(testExtrinsic, alice.address, {
                         nonce: 0,
-                        blockHash: GENESIS_HASH
+                        blockHash: GENESIS_HASH,
                     })
                 ).rejects.toThrow();
             });
@@ -246,7 +246,7 @@ describe('a wallet', () => {
                 await expect(
                     wallet.sign(testExtrinsic, alice.address, {
                         nonce: 0,
-                        blockHash: GENESIS_HASH
+                        blockHash: GENESIS_HASH,
                     })
                 ).resolves;
             });
@@ -265,7 +265,7 @@ describe('a wallet', () => {
                 await expect(
                     wallet.sign(testExtrinsic, alice.address, {
                         nonce: 0,
-                        blockHash: GENESIS_HASH
+                        blockHash: GENESIS_HASH,
                     })
                 ).rejects.toThrow('wallet is locked');
             });
