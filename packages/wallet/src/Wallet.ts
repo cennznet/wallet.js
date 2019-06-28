@@ -102,9 +102,9 @@ export class Wallet implements Signer, IWallet {
      */
     @synchronized
     @waitForCryptoReady
-    async createNewVault(passphrase: string): Promise<void> {
+    async createNewVault(passphrase: string, opt?: any): Promise<void> {
         privatePasswd.set(this, passphrase);
-        privateKeyrings.set(this, [await this.defaultKeyringType.generate()]);
+        privateKeyrings.set(this, [await this.defaultKeyringType.generate(opt)]);
         this._isLocked = false;
         await this.persistAll();
     }

@@ -12,10 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {KeyringPair, KeyringPair$Json, KeyringPair$Meta} from '@cennznet/util/types';
+import {mnemonicGenerate} from '@cennznet/util';
 import {Keyring} from '@plugnet/keyring';
+import {KeyringPair, KeyringPair$Json, KeyringPair$Meta} from '@plugnet/keyring/types';
 import {KeypairType} from '@plugnet/util-crypto/types';
-import {generateMnemonic} from 'bip39';
+
 import {DEFAULT_KEYRING_TYPE} from '../constants';
 import {waitForCryptoReady} from '../decorators';
 import {IKeyring} from '../types';
@@ -52,7 +53,7 @@ export class SimpleKeyring implements IKeyring<SerializedSimpleKeyring> {
     @waitForCryptoReady
     async addPair(pair?: KeyringPair): Promise<KeyringPair> {
         if (pair === undefined) {
-            return this._keyring.addFromMnemonic(generateMnemonic());
+            return this._keyring.addFromMnemonic(mnemonicGenerate());
         } else {
             if (pair.isLocked) {
                 throw new Error('key pair is locked. unlock before add it into wallet');

@@ -65,6 +65,13 @@ describe('a wallet', () => {
         await expect(wallet.getAddresses()).resolves.toHaveLength(5);
     });
 
+    it('create with custom word counts', async () => {
+        const wallet = new Wallet();
+        await wallet.createNewVault(walletPassphase, {words: 24});
+        const walletExport = await wallet.export(walletPassphase);
+        expect(walletExport[0].data.mnemonic.split(' ').length).toBe(24);
+    });
+
     describe('accounts', () => {
         it('addKeyring(keyring)', async () => {
             const keyring = new SimpleKeyring();
@@ -272,9 +279,8 @@ describe('a wallet', () => {
             await wallet.addKeyring(keyring);
         });
 
-        it.only('all keyrings', async () => {
+        it('all keyrings', async () => {
             const result = await wallet.export(walletPassphase);
-            console.log(JSON.stringify(result, undefined, 4));
             expect(result).toHaveLength(2);
             expect(result[0].data).toHaveProperty('mnemonic');
             expect(result[0].data).toHaveProperty('hdPath');
