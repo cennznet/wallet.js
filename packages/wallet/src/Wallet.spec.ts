@@ -201,6 +201,15 @@ describe('a wallet', () => {
                 })
             ).rejects.toThrow();
         });
+        it('sign and verify a payload', async () => {
+            const keyring = new SimpleKeyring();
+            await keyring.addPair(alice);
+            await wallet.addKeyring(keyring);
+            const payload = '0x1a91ff00';
+            const sig = await wallet.signPayload(payload, alice.address);
+            expect(sig).toBeDefined();
+            await expect(wallet.verifySignature(payload, sig, alice.address)).resolves.toBeTruthy();
+        });
     });
 
     describe('lock/unlock', () => {

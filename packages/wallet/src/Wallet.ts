@@ -13,7 +13,8 @@
 // limitations under the License.
 
 import {Signer} from '@cennznet/api/polkadot.types';
-import {IExtrinsic, SignatureOptions} from '@cennznet/types/polkadot.types';
+import {AnyU8a, IExtrinsic, SignatureOptions} from '@cennznet/types/polkadot.types';
+import {u8aToU8a} from '@cennznet/util';
 import {KeyringPair$Json} from '@cennznet/util/types';
 import {persistBeforeReturn, requireUnlocked, synchronized, waitForCryptoReady} from './decorators';
 import naclEncryptor from './encryptors/naclEncryptor';
@@ -79,11 +80,12 @@ export class Wallet implements Signer, IWallet {
     }
 
     /**
-     * sign a extrinsic using the account specified by opt.from
+     * sign a extrinsic using the account specified by address
      * @param extrinsic
-     * @param opt
+     * @param address
+     * @param options
      * @requires wallet unlocked
-     * @throws when the account(opt.from) is not managed by the wallet.
+     * @throws when the account is not managed by the wallet.
      */
     @synchronized
     @requireUnlocked
@@ -94,6 +96,37 @@ export class Wallet implements Signer, IWallet {
         extrinsic.sign(signerPair, options);
 
         return ++id;
+    }
+
+    /**
+     * sign a raw payload using nacl or schnorrkel deps on keyring type
+     * @param extrinsic
+     * @param opt
+     * @requires wallet unlocked
+     * @throws when the account is not managed by the wallet.
+     */
+    @synchronized
+    @requireUnlocked
+    @waitForCryptoReady
+    async signPayload(payload: AnyU8a, address: string): Promise<Uint8Array> {
+        const signerPair = await getKeyringByAddress(this, this._accountKeyringMap, address).getPair(address);
+        return signerPair.sign(u8aToU8a(payload));
+    }
+
+    /**
+     * verify a signature using nacl or schnorrkel deps on keyring type
+     * @param message
+     * @param signature
+     * @param address
+     * @requires wallet unlocked
+     * @throws when the account is not managed by the wallet.
+     */
+    @synchronized
+    @requireUnlocked
+    @waitForCryptoReady
+    async verifySignature(message: AnyU8a, signature: AnyU8a, address: string): Promise<boolean> {
+        const signerPair = await getKeyringByAddress(this, this._accountKeyringMap, address).getPair(address);
+        return signerPair.verify(u8aToU8a(message), u8aToU8a(signature));
     }
 
     /**
