@@ -1820,10 +1820,10 @@
     "@plugnet/types" "^0.81.100"
     "@plugnet/util-crypto" "^0.93.100"
 
-"@plugnet/dev@^0.30.5":
-  version "0.30.6"
-  resolved "https://registry.yarnpkg.com/@plugnet/dev/-/dev-0.30.6.tgz#e2509ec2db379e6ed495f4e19830af37e3157f8e"
-  integrity sha512-/TTVJR2QoJulDijQ5liV+XIVuXLvycqP7df33ZbeciyW+ccZWCN/ICII7U6dCQ9Mx/hYX5eKY5AjbLTXkqnWmg==
+"@plugnet/dev@^0.30.7":
+  version "0.30.7"
+  resolved "https://registry.yarnpkg.com/@plugnet/dev/-/dev-0.30.7.tgz#147619f6f75260628507c653f03bc55676eac727"
+  integrity sha512-A7j64+Gsub1lDPJcCU4oi6JxPqNw6Lp1EaEvxffANyHKXwziofPspmvubgcpjHvC2vD+UAvYWhBqJP1eW7CB/A==
   dependencies:
     "@babel/cli" "^7.4.4"
     "@babel/core" "^7.4.5"

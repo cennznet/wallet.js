@@ -15,8 +15,7 @@
         "url": "git+ssh://git@github.com/cennznet/wallet.js.git"
     },
     "scripts": {
-        "test": "echo \"Error: run tests from root\" && exit 1",
-        "test:unit": "jest --coverage -c ../../jest/jest.config.js spec"
+        "test": "echo \"Error: run tests from root\" && exit 1"
     },
     "dependencies": {
         "@cennznet/util": "^0.14.1",
