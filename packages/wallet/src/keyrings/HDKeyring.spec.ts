@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {cryptoWaitReady} from '@cennznet/util';
+import {KeyringPair} from '@plugnet/keyring/types';
+import {cryptoWaitReady} from '@plugnet/util-crypto';
 import {HDKeyring} from './HDKeyring';
 import {IKeyring} from '../types';
-import {KeyringPair} from '@cennznet/util/types';
 
 describe('HDKeyring', () => {
     beforeAll(async () => {

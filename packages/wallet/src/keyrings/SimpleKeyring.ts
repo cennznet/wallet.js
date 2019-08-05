@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {mnemonicGenerate} from '@cennznet/util';
 import {Keyring} from '@plugnet/keyring';
 import {KeyringPair, KeyringPair$Json, KeyringPair$Meta} from '@plugnet/keyring/types';
+import {mnemonicGenerate} from '@plugnet/util-crypto';
 import {KeypairType} from '@plugnet/util-crypto/types';
 
 import {DEFAULT_KEYRING_TYPE} from '../constants';

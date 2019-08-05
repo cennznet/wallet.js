@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {cryptoWaitReady} from '@cennznet/util';
-import {KeyringPair} from '@cennznet/util/types';
+import {cryptoWaitReady} from '@plugnet/util-crypto';
+import {KeyringPair} from '@plugnet/keyring/types';
 import {IKeyring, KeyringType} from '../types';
 import {HDKeyring} from './HDKeyring';
 import {SimpleKeyring} from './SimpleKeyring';

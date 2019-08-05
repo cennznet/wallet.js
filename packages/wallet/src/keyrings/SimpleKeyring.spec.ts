@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {cryptoWaitReady, hexToU8a} from '@cennznet/util';
+import {hexToU8a} from '@plugnet/util';
+import {cryptoWaitReady} from '@plugnet/util-crypto';
 import TestingPairs from '@plugnet/keyring/testingPairs';
 import {SimpleKeyring} from './SimpleKeyring';
-import {stringToU8a} from '@plugnet/util';
 
 const TESTING_PAIRS = TestingPairs();
 
