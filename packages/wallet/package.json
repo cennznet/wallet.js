@@ -18,16 +18,16 @@
         "test": "echo \"Error: run tests from root\" && exit 1"
     },
     "dependencies": {
-        "@cennznet/util": "^0.14.1",
-        "@plugnet/keyring": "^0.93.101",
+        "@plugnet/keyring": "^0.94.100",
+        "@plugnet/types": "^0.82.0-beta.97",
+        "@plugnet/util": "^0.94.100",
         "bip39": "^2.6.0",
         "hdkey": "^1.1.0",
         "reflect-metadata": "^0.1.12",
         "tweetnacl": "^1.0.1"
     },
     "devDependencies": {
-        "@cennznet/api": "^0.14.1",
-        "@cennznet/types": "^0.14.1",
+        "@plugnet/api": "^0.82.0-beta.97",
         "@types/jest": "^24.0.15",
         "jest": "24.8.0"
     }

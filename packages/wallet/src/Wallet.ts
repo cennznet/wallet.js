@@ -12,10 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Signer} from '@cennznet/api/polkadot.types';
-import {AnyU8a, IExtrinsic, SignatureOptions} from '@cennznet/types/polkadot.types';
-import {u8aToU8a} from '@cennznet/util';
-import {KeyringPair$Json} from '@cennznet/util/types';
+import {Signer, SignerPayload, SignerResult} from '@plugnet/api/types';
+import {KeyringPair$Json} from '@plugnet/keyring/types';
+import {SignaturePayload} from '@plugnet/types';
+import {AnyU8a, IExtrinsic, SignatureOptions} from '@plugnet/types/types';
+import {u8aToU8a} from '@plugnet/util';
 import {persistBeforeReturn, requireUnlocked, synchronized, waitForCryptoReady} from './decorators';
 import naclEncryptor from './encryptors/naclEncryptor';
 import {HDKeyring} from './keyrings/HDKeyring';
@@ -80,7 +81,7 @@ export class Wallet implements Signer, IWallet {
     }
 
     /**
-     * sign a extrinsic using the account specified by address
+     * @deprecated sign a extrinsic using the account specified by address
      * @param extrinsic
      * @param address
      * @param options
@@ -99,7 +100,7 @@ export class Wallet implements Signer, IWallet {
     }
 
     /**
-     * sign a raw payload using nacl or schnorrkel deps on keyring type
+     * sign a extrinsic payload (for the new Signer interface)
      * @param extrinsic
      * @param opt
      * @requires wallet unlocked
@@ -108,9 +109,13 @@ export class Wallet implements Signer, IWallet {
     @synchronized
     @requireUnlocked
     @waitForCryptoReady
-    async signPayload(payload: AnyU8a, address: string): Promise<Uint8Array> {
+    async signPayload(payload: SignerPayload): Promise<SignerResult> {
+        const {address} = payload;
         const signerPair = await getKeyringByAddress(this, this._accountKeyringMap, address).getPair(address);
-        return signerPair.sign(u8aToU8a(payload));
+        const signed = new SignaturePayload(payload, {version: payload.version}).sign(signerPair);
+        const result: SignerResult = {id: ++id, ...signed};
+
+        return result;
     }
 
     /**

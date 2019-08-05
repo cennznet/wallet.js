@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {mnemonicGenerate, mnemonicToSeed} from '@cennznet/util';
-import {KeyringPair} from '@cennznet/util/types';
 import {Keyring} from '@plugnet/keyring';
+import {KeyringPair} from '@plugnet/keyring/types';
+import {mnemonicGenerate, mnemonicToSeed} from '@plugnet/util-crypto';
 import HDKey from 'hdkey';
 import {DEFAULT_KEYRING_TYPE} from '../constants';
 import {waitForCryptoReady} from '../decorators';
